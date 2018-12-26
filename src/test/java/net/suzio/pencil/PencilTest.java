@@ -29,4 +29,14 @@ public class PencilTest {
     pencil.write(text);
     assertEquals(durability - text.length(), pencil.getDurability());
   }
+
+  @Test
+  public void whenPencilWritesSpaceItDoesNotDull() {
+    final int durability = 100;
+    Pencil pencil = new Pencil(durability);
+    String text = "Write something";
+    pencil.write(text);
+    pencil.write(" ");
+    assertEquals(durability - text.length(), pencil.getDurability());
+  }
 }
