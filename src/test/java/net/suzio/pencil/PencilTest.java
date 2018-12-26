@@ -50,4 +50,12 @@ public class PencilTest {
     pencil.write(" ");
     assertEquals(durability - text.length(), pencil.getDurability());
   }
+
+  @Test
+  public void WhenPencilWritesInnerWhitespaceItDoesNotDull() {
+    final int durability = 100;
+    Pencil pencil = new Pencil(durability);
+    pencil.write("1 2 3 \n");
+    assertEquals(97, pencil.getDurability());
+  }
 }
