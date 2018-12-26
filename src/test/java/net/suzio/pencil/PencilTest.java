@@ -6,12 +6,12 @@ import org.junit.Test;
 public class PencilTest {
 
   @Test
-  public void whenPencilwritesNullNothingHappens() {
+  public void whenPencilWritesNullNothingHappens() {
     Pencil pencil = new Pencil();
     assertEquals("", pencil.write(null));
   }
   @Test
-  public void whenPencilwritesEmptyNothingHappens() {
+  public void whenPencilWritesEmptyNothingHappens() {
     Pencil pencil = new Pencil();
     assertEquals("", pencil.write(""));
   }
@@ -36,7 +36,7 @@ public class PencilTest {
   public void whenPencilWritesDurabilityDecreases() {
     final int durability = 100;
     Pencil pencil = new Pencil(durability);
-    String text = "Write something";
+    String text = "text";
     pencil.write(text);
     assertEquals(durability - text.length(), pencil.getDurability());
   }
@@ -45,7 +45,7 @@ public class PencilTest {
   public void whenPencilWritesSpaceItDoesNotDull() {
     final int durability = 100;
     Pencil pencil = new Pencil(durability);
-    String text = "Write something";
+    String text = "text";
     pencil.write(text);
     pencil.write(" ");
     assertEquals(durability - text.length(), pencil.getDurability());

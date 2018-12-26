@@ -14,8 +14,14 @@ public class Pencil {
   }
 
   public String write(String text) {
-    paper.append(text);
-    durability -= text.length();
+    if (text != null && text.length() > 0) {
+      for (char letter: text.toCharArray()) {
+        paper.append(letter);
+        if (letter != '\n' && letter!= '\r' && letter != ' ') {
+          durability--;
+        }
+      }
+    }
     return paper.toString();
   }
 
