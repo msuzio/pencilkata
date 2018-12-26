@@ -6,6 +6,17 @@ import org.junit.Test;
 public class PencilTest {
 
   @Test
+  public void whenPencilwritesNullNothingHappens() {
+    Pencil pencil = new Pencil();
+    assertEquals("", pencil.write(null));
+  }
+  @Test
+  public void whenPencilwritesEmptyNothingHappens() {
+    Pencil pencil = new Pencil();
+    assertEquals("", pencil.write(""));
+  }
+
+  @Test
   public void whenPencilWritesonPaperTextShouldBeWritten() {
     Pencil pencil = new Pencil();
     String text = "She sells sea shells";
