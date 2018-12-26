@@ -12,4 +12,12 @@ public class PencilTest {
     assertEquals("Text should written", text, pencil.write(text));
   }
 
+  @Test
+  public void whenPencilWritesonPaperTextShouldBeAppended() {
+    Pencil pencil = new Pencil();
+    String text = " She sells sea shells ";
+    String otherText = "by the sea shore";
+    pencil.write(text);
+    assertEquals("full text should written", text + otherText, pencil.write(otherText));
+  }
 }
