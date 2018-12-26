@@ -20,4 +20,13 @@ public class PencilTest {
     pencil.write(text);
     assertEquals("full text should written", text + otherText, pencil.write(otherText));
   }
+
+  @Test
+  public void WhenPencilWritesDurabilityDecreases() {
+    final int durability = 100;
+    Pencil pencil = new Pencil(durability);
+    String text = "Write something";
+    pencil.write(text);
+    assertEquals(durability - text.length(), pencil.getDurability());
+  }
 }
