@@ -22,7 +22,7 @@ public class PencilTest {
   }
 
   @Test
-  public void WhenPencilWritesDurabilityDecreases() {
+  public void whenPencilWritesDurabilityDecreases() {
     final int durability = 100;
     Pencil pencil = new Pencil(durability);
     String text = "Write something";

@@ -14,7 +14,9 @@ public class Pencil {
   }
 
   public String write(String text) {
-    return paper.append(text).toString();
+    paper.append(text);
+    durability -= text.length();
+    return paper.toString();
   }
 
   public int getDurability() {
