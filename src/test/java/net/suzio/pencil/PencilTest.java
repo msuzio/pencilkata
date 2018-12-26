@@ -9,7 +9,7 @@ public class PencilTest {
   public void whenPencilWritesonPaperTextShouldBeWritten() {
     Pencil pencil = new Pencil();
     String text = "She sells sea shells";
-    assertEquals(text, pencil.write(text));
+    assertEquals("Text should written", text, pencil.write(text));
   }
 
 }
