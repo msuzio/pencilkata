@@ -89,4 +89,14 @@ public class PencilTest {
     pencil.write(text);
     assertEquals("Starting durability of " + durability + " should be decreased by 2 per character in writing '" + text + "'",0, pencil.getDurability());
   }
+
+  @Test
+  public void whenPencilDullsCompletelyItStopsWriting() {
+    int durability = 5;
+    Pencil pencil = new Pencil(durability);
+    String text = "123456789";
+    String assertion =
+        "Text '" + text + "' longer than durability of '" + durability + "' should be truncated";
+    assertEquals(assertion, text.substring(0, durability), pencil.write(text));
+  }
 }
