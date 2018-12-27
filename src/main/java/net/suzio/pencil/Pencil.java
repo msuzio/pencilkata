@@ -9,9 +9,6 @@ public class Pencil {
     this(-1);
   }
 
-  /*
-
-   */
   public Pencil(int durability) {
     this.durability = durability;
   }

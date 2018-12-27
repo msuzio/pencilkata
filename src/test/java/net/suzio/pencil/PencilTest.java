@@ -52,10 +52,30 @@ public class PencilTest {
   }
 
   @Test
-  public void WhenPencilWritesInnerWhitespaceItDoesNotDull() {
+  public void whenPencilWritesInnerWhitespaceItDoesNotDull() {
     final int durability = 100;
     Pencil pencil = new Pencil(durability);
     pencil.write("1 2 3 \n");
     assertEquals(97, pencil.getDurability());
+  }
+
+  @Test
+  public void whenPencilWritesLowercaseItDullsByOne() {
+    // slightly redundant but we prefer an explicit test
+    final int durability = 3;
+    Pencil pencil = new Pencil(durability);
+    String text = "abc";
+    pencil.write(text);
+    assertEquals(0, pencil.getDurability());
+  }
+
+  @Test
+  public void whenPencilWritesUppercaseItDullsByTwo() {
+    // slightly redundant but we prefer an explicit test
+    final int durability = 6;
+    Pencil pencil = new Pencil(durability);
+    String text = "ABC";
+    pencil.write(text);
+    assertEquals(0, pencil.getDurability());
   }
 }
