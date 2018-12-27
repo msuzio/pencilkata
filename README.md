@@ -7,5 +7,3 @@ should work
 ```
 gradle test
 ```
-
-q
