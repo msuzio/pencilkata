@@ -3,6 +3,7 @@ package net.suzio.pencil;
 public class Pencil {
 
   private final int maxDurability;
+  private final int length;
   private int currentDurability;
   private StringBuffer paper = new StringBuffer();
 
@@ -11,8 +12,13 @@ public class Pencil {
   }
 
   public Pencil(int durability) {
+    this(durability, -1);
+  }
+
+  public Pencil(int durability, int length) {
     this.maxDurability = durability;
     this.currentDurability = maxDurability;
+    this.length = length;
   }
 
   public String write(String text) {
