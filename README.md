@@ -7,9 +7,3 @@ should work
 ```
 gradle test
 ```
-
-if (Character.toUpperCase(letter) == letter) {
-            durability  -= 2;
-          } else {
-            durability--;
-          }
