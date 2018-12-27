@@ -11,10 +11,6 @@ public class Pencil {
   }
 
   public Pencil(int durability) {
-    this(durability, -1);
-  }
-
-  public Pencil(int durability, int length) {
     this.maxDurability = durability;
     this.currentDurability = maxDurability;
   }
