@@ -14,26 +14,24 @@ public class Pencil {
   }
 
   public String write(String text) {
-    if (durability > 0) {
-      if (text != null && text.length() > 0) {
-        for (char letter : text.toCharArray()) {
+    if (text != null && text.length() > 0) {
+      for (char letter : text.toCharArray()) {
+        if (durability != 0) {
           paper.append(letter);
-          if (letter != '\n' && letter != '\r' && letter != ' ') {
-            if (Character.isLetter(letter) && Character.toUpperCase(letter) == letter) {
-              dull(2);
-            } else {
-              dull(1);
-            }
-          }
+          dullForCharacter(letter);
         }
       }
     }
     return paper.toString();
   }
 
-  private void dull(int graphiteUsed) {
-    if (durability > 0) {
-      durability -= graphiteUsed;
+  private void dullForCharacter(char letter) {
+    if (letter != '\n' && letter != '\r' && letter != ' ') {
+      if (Character.isLetter(letter) && Character.toUpperCase(letter) == letter) {
+        durability -= 2;
+      } else {
+        durability--;
+      }
     }
   }
 
