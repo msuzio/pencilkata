@@ -18,7 +18,11 @@ public class Pencil {
       for (char letter: text.toCharArray()) {
         paper.append(letter);
         if (letter != '\n' && letter!= '\r' && letter != ' ') {
-          dull(1);
+          if (Character.isLetter(letter) && Character.toUpperCase(letter) == letter) {
+            dull(2);
+          } else {
+            dull(1);
+          }
         }
       }
     }
