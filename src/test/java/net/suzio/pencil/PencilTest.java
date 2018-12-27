@@ -109,7 +109,6 @@ public class PencilTest {
     pencil.write(text);
     assertEquals("Writing '" + text + "' should dull pencil", 0, pencil.getDurability());
     pencil.sharpen();
-    assertEquals("resharpened pencil should be restored to original durability", durability, pencil.getDurability());
-
+    assertEquals("Resharpened pencil should be restored to original durability", durability, pencil.getDurability());
   }
 }
