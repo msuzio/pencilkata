@@ -8,28 +8,28 @@ public class PencilTest {
   @Test
   public void whenPencilWritesNullNothingHappens() {
     Pencil pencil = new Pencil();
-    assertEquals("", pencil.write(null));
+    assertEquals("A null character should have no effect","", pencil.write(null));
   }
   @Test
-  public void whenPencilWritesEmptyNothingHappens() {
+  public void whenPencilWritesEmptyStringNothingHappens() {
     Pencil pencil = new Pencil();
-    assertEquals("", pencil.write(""));
+    assertEquals("Am empty string should have no effect","", pencil.write(""));
   }
 
   @Test
-  public void whenPencilWritesonPaperTextShouldBeWritten() {
+  public void whenPencilWritesTextShouldBeWritten() {
     Pencil pencil = new Pencil();
     String text = "She sells sea shells";
     assertEquals("Text should written", text, pencil.write(text));
   }
 
   @Test
-  public void whenPencilWritesonPaperTextShouldBeAppended() {
+  public void whenPencilWritesTextShouldBeAppended() {
     Pencil pencil = new Pencil();
     String text = " She sells sea shells ";
     String otherText = "by the sea shore";
     pencil.write(text);
-    assertEquals("full text should written", text + otherText, pencil.write(otherText));
+    assertEquals("Full text should written", text + otherText, pencil.write(otherText));
   }
 
   @Test
@@ -38,7 +38,7 @@ public class PencilTest {
     Pencil pencil = new Pencil(durability);
     String text = "text";
     pencil.write(text);
-    assertEquals(durability - text.length(), pencil.getDurability());
+    assertEquals("Starting durability of " + durability + "should be decreased by writing '" + text + "'", durability - text.length(), pencil.getDurability());
   }
 
   @Test
@@ -47,16 +47,18 @@ public class PencilTest {
     Pencil pencil = new Pencil(durability);
     String text = "text";
     pencil.write(text);
-    pencil.write(" ");
-    assertEquals(durability - text.length(), pencil.getDurability());
+    String whitespace = " ";
+    pencil.write(whitespace);
+    assertEquals("Starting durability of " + durability + " should not be decreased by adding '" + whitespace + "' to '" + text + "'", durability - text.length(), pencil.getDurability());
   }
 
   @Test
   public void whenPencilWritesInnerWhitespaceItDoesNotDull() {
     final int durability = 100;
     Pencil pencil = new Pencil(durability);
-    pencil.write("1 2 3 \n");
-    assertEquals(97, pencil.getDurability());
+    String text = "1 2 3 \n";
+    pencil.write(text);
+    assertEquals("Starting durability of " + durability + " should not be decreased by inner whitespace in '" + text + "'",97, pencil.getDurability());
   }
 
   @Test
@@ -66,7 +68,7 @@ public class PencilTest {
     Pencil pencil = new Pencil(durability);
     String text = "abc";
     pencil.write(text);
-    assertEquals(0, pencil.getDurability());
+    assertEquals("Starting durability of " + durability + " should decreased by 1 per character in writing '" + text + "'",0, pencil.getDurability());
   }
 
   @Test
@@ -75,8 +77,7 @@ public class PencilTest {
     Pencil pencil = new Pencil(durability);
     String text = "a&b";
     pencil.write(text);
-    assertEquals(0, pencil.getDurability());
-
+    assertEquals("Starting durability of " + durability + " should be decreased by 2 per character in writing '" + text + "'",0, pencil.getDurability());
   }
 
   @Test
@@ -86,6 +87,6 @@ public class PencilTest {
     Pencil pencil = new Pencil(durability);
     String text = "ABC";
     pencil.write(text);
-    assertEquals(0, pencil.getDurability());
+    assertEquals("Starting durability of " + durability + " should be decreased by 2 per character in writing '" + text + "'",0, pencil.getDurability());
   }
 }
