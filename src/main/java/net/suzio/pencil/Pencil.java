@@ -38,4 +38,8 @@ public class Pencil {
   public int getDurability() {
     return durability;
   }
+
+  public void sharpen() {
+
+  }
 }

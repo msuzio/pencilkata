@@ -99,4 +99,17 @@ public class PencilTest {
         "Text '" + text + "' longer than durability of '" + durability + "' should be truncated";
     assertEquals(assertion, text.substring(0, durability), pencil.write(text));
   }
+
+
+  @Test
+  public void sharpeningResetsDurability() {
+    int durability = 5;
+    Pencil pencil = new Pencil(durability);
+    String text = "12345";
+    pencil.write(text);
+    assertEquals("Writing '" + text + "' should dull pencil", 0, pencil.getDurability());
+    pencil.sharpen();
+    assertEquals("resharpened pencil should be restored to original durability", durability, pencil.getDurability());
+
+  }
 }
