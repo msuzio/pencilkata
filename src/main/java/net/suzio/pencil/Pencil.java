@@ -30,7 +30,7 @@ public class Pencil {
 
 
   public String write(final String text) {
-    if (textExists(text)) {
+    if (textIsNotEmpty(text)) {
       for (final char letter : text.toCharArray()) {
         if (pencilCanWrite()) {
           paper.append(letter);
@@ -42,14 +42,16 @@ public class Pencil {
   }
 
   public String erase(final String textToErase) {
-    final int textLocation = paper.lastIndexOf(textToErase);
-    if (textLocation > -1) {
-      int eraseLocation = textLocation + textToErase.length() - 1;
-      while (pencilCanErase() && eraseLocation >= textLocation) {
-        degradeEraserForCharacter(paper.charAt(eraseLocation));
-        paper.deleteCharAt(eraseLocation);
-        paper.insert(eraseLocation, ' ');
-        eraseLocation--;
+    if (pencilCanErase() && textIsNotEmpty(textToErase)) {
+      final int textLocation = paper.lastIndexOf(textToErase);
+      if (textLocation > -1) {
+        int eraseLocation = textLocation + textToErase.length() - 1;
+        while (pencilCanErase() && eraseLocation >= textLocation) {
+          degradeEraserForCharacter(paper.charAt(eraseLocation));
+          paper.deleteCharAt(eraseLocation);
+          paper.insert(eraseLocation, ' ');
+          eraseLocation--;
+        }
       }
     }
     return paper.toString();
@@ -61,7 +63,8 @@ public class Pencil {
     }
   }
 
-  private boolean textExists(final String text) {
+  // Not going to haul in Apache Commons just for one StringUtils method.
+  private boolean textIsNotEmpty(final String text) {
     return text != null && text.length() > 0;
   }
 

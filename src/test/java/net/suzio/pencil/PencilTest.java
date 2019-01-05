@@ -188,6 +188,22 @@ public class PencilTest {
   }
 
   @Test
+  public void WhenEraserErasesEmptyStringNothingHappens() {
+    final Pencil pencilWithEraser = new Pencil().withEraser();
+    final String writtenText = pencilWithEraser.write("something");
+    final String erasedText = pencilWithEraser.erase(null);
+    assertEquals("Erasing a null value should not change the paper", writtenText, erasedText);
+  }
+
+  @Test
+  public void WhenEraserErasesNullNothingHappens() {
+    final Pencil pencilWithEraser = new Pencil().withEraser();
+    final String writtenText = pencilWithEraser.write("something");
+    final String erasedText = pencilWithEraser.erase(null);
+    assertEquals("Erasing a null value should not change the paper", writtenText, erasedText);
+  }
+
+  @Test
   public void whenEraserErasesTextItShouldDegrade() {
     final int durability = 10;
     final Pencil pencilWithEraser = new Pencil().withEraser(durability);
