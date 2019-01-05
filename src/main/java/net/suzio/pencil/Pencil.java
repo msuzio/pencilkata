@@ -42,13 +42,22 @@ public class Pencil {
 
   public String erase(String textToErase) {
     int textLocation = paper.lastIndexOf(textToErase);
-    int eraseLocation = textLocation;
-    while(eraseLocation < textLocation + textToErase.length()) {
-      paper.deleteCharAt(eraseLocation);
-      paper.insert(eraseLocation, ' ');
-      eraseLocation++;
+    if (textLocation > -1) {
+      int eraseLocation = textLocation;
+      while (eraseLocation < textLocation + textToErase.length()) {
+        degradeEraserForCharacter(paper.charAt(eraseLocation));
+        paper.deleteCharAt(eraseLocation);
+        paper.insert(eraseLocation, ' ');
+        eraseLocation++;
+      }
     }
     return paper.toString();
+  }
+
+  private void degradeEraserForCharacter(char letter) {
+    if (isNotBlankCharacter(letter)) {
+      eraserDurability--;
+    }
   }
 
   private boolean textExists(String text) {
@@ -57,10 +66,11 @@ public class Pencil {
 
   private void dullForCharacter(char letter) {
     if (pencilCanWrite() && isNotBlankCharacter(letter)) {
-      if (isLowerCaseOrPunctuation(letter)) {
+      if (isCapitalLetter(letter)) {
         currentDurability -= 2;
       } else {
         currentDurability--;
+
       }
     }
   }
@@ -84,7 +94,7 @@ public class Pencil {
     return currentDurability > 0;
   }
 
-  private boolean isLowerCaseOrPunctuation(char letter) {
+  private boolean isCapitalLetter(char letter) {
     return Character.isLetter(letter) && Character.toUpperCase(letter) == letter;
   }
 

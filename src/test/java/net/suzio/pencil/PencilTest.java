@@ -1,7 +1,6 @@
 package net.suzio.pencil;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 
@@ -160,20 +159,38 @@ public class PencilTest {
   @Test
   public void eraserErasesSuccessiveTextOccurrences() {
     Pencil pencilWithEraser = new Pencil().withEraser();
-    pencilWithEraser.write("How much wood would a woodchuck chuck if a woodchuck could chuck wood?");
-    assertEquals("How much wood would a woodchuck chuck if a woodchuck could       wood?", pencilWithEraser.erase("chuck"));
-    assertEquals("How much wood would a woodchuck chuck if a wood      could       wood?", pencilWithEraser.erase("chuck"));
+    pencilWithEraser
+        .write("How much wood would a woodchuck chuck if a woodchuck could chuck wood?");
+    assertEquals("How much wood would a woodchuck chuck if a woodchuck could       wood?",
+        pencilWithEraser.erase("chuck"));
+    assertEquals("How much wood would a woodchuck chuck if a wood      could       wood?",
+        pencilWithEraser.erase("chuck"));
+  }
+
+  @Test
+  public void eraserDoesNotEraseIfTextDoesNotMatch() {
+    Pencil pencilWithEraser = new Pencil().withEraser();
+    String text = "something";
+    pencilWithEraser.write(text);
+    String textToErase = "abc";
+    String erasedText = pencilWithEraser.erase(textToErase);
+    assertEquals("Erased text should be the same when removing non-matching string '" + textToErase,text, erasedText);
   }
 
   @Test
   public void whenEraserErasesTextItShouldDegrade() {
     int durability = 10;
     Pencil pencilWithEraser = new Pencil().withEraser(durability);
-    String writtenText = "abcdefgabc";
+    String writtenText = "abcdef  gabc";
     String textToErase = "abc";
     pencilWithEraser.write(writtenText);
     pencilWithEraser.erase(textToErase);
     int degradedEraser = pencilWithEraser.getEraserDurability();
-    assertEquals("Eraser should be degraded by erasing", durability-textToErase.length(), degradedEraser);
+    assertEquals("Eraser should be degraded by erasing", durability - textToErase.length(),
+        degradedEraser);
+    pencilWithEraser.erase("f  g");
+    int degradeEraserForBlanks = pencilWithEraser.getEraserDurability();
+    assertEquals("Eraser should not degrade when erasing blanks", degradedEraser - 2,
+        degradeEraserForBlanks);
   }
 }
