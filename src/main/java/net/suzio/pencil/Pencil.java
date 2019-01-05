@@ -3,8 +3,8 @@ package net.suzio.pencil;
 public class Pencil {
 
   private int maxDurability;
-  private int length = -1;
-  private int currentDurability = -1;
+  private int length = Integer.MAX_VALUE;
+  private int currentDurability = Integer.MAX_VALUE;
   private StringBuffer paper = new StringBuffer();
 
   public Pencil withLength(int length) {
@@ -19,9 +19,9 @@ public class Pencil {
 
 
   public String write(String text) {
-    if (text != null && text.length() > 0) {
+    if (textExists(text)) {
       for (char letter : text.toCharArray()) {
-        if (currentDurability != 0) {
+        if (pencilCanWrite()) {
           paper.append(letter);
           dullForCharacter(letter);
         }
@@ -30,14 +30,16 @@ public class Pencil {
     return paper.toString();
   }
 
+  private boolean textExists(String text) {
+    return text != null && text.length() > 0;
+  }
+
   private void dullForCharacter(char letter) {
-    if (currentDurability > 0) {
-      if (letter != '\n' && letter != '\r' && letter != ' ') {
-        if (Character.isLetter(letter) && Character.toUpperCase(letter) == letter) {
-          currentDurability -= 2;
-        } else {
-          currentDurability--;
-        }
+    if (pencilCanWrite() && isNotBlankCharacter(letter)) {
+      if (isLowerCaseOrPunctuation(letter)) {
+        currentDurability -= 2;
+      } else {
+        currentDurability--;
       }
     }
   }
@@ -47,9 +49,26 @@ public class Pencil {
   }
 
   public void sharpen() {
-    if (length != 0) {
+    if (canBeSharpened()) {
       currentDurability = maxDurability;
       length--;
     }
+  }
+
+
+  private boolean pencilCanWrite() {
+    return currentDurability > 0;
+  }
+
+  private boolean isLowerCaseOrPunctuation(char letter) {
+    return Character.isLetter(letter) && Character.toUpperCase(letter) == letter;
+  }
+
+  private boolean isNotBlankCharacter(char letter) {
+    return letter != '\n' && letter != '\r' && letter != ' ';
+  }
+
+  private boolean canBeSharpened() {
+    return length != 0;
   }
 }
