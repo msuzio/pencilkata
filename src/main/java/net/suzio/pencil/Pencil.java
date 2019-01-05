@@ -17,6 +17,10 @@ public class Pencil {
     return this;
   }
 
+  public Pencil withEraser() {
+    return this;
+  }
+
 
   public String write(String text) {
     if (textExists(text)) {
@@ -27,6 +31,10 @@ public class Pencil {
         }
       }
     }
+    return paper.toString();
+  }
+
+  public String erase(String textToErase) {
     return paper.toString();
   }
 

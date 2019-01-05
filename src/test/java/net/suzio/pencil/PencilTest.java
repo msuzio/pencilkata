@@ -1,6 +1,7 @@
 package net.suzio.pencil;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 
@@ -143,5 +144,17 @@ public class PencilTest {
     pencil.sharpen();
     assertEquals("Pencil should be not re-sharpened after original length is used up",
         beforeSharpen, pencil.getDurability());
+  }
+
+  @Test
+  public void eraserErasesTextOccurrence() {
+    Pencil pencilWithEraser = new Pencil().withEraser();
+    String writtenText = "abcdefgabc";
+    String textToErase = "abc";
+    String expectedErasureResult = "   defg";
+    pencilWithEraser.write(writtenText);
+    String erasedText = pencilWithEraser.erase(textToErase);
+    assertFalse("Paper should not contain text after erasure", erasedText.contains(textToErase));
+    assertEquals("Erased text should be replaced by blanks", expectedErasureResult, erasedText);
   }
 }
