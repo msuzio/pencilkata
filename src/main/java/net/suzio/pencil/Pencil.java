@@ -6,6 +6,7 @@ public class Pencil {
   private int length = Integer.MAX_VALUE;
   private int currentDurability = Integer.MAX_VALUE;
   private StringBuffer paper = new StringBuffer();
+  private int eraserDurability = Integer.MAX_VALUE;
 
   public Pencil withLength(int length) {
     this.length = length;
@@ -18,6 +19,11 @@ public class Pencil {
   }
 
   public Pencil withEraser() {
+    return this;
+  }
+
+  public Pencil withEraser(int eraserDurability) {
+    this.eraserDurability = eraserDurability;
     return this;
   }
 
@@ -59,8 +65,12 @@ public class Pencil {
     }
   }
 
-  public int getDurability() {
+  int getDurability() {
     return currentDurability;
+  }
+
+  int getEraserDurability() {
+    return this.eraserDurability;
   }
 
   public void sharpen() {

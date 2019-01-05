@@ -164,4 +164,16 @@ public class PencilTest {
     assertEquals("How much wood would a woodchuck chuck if a woodchuck could       wood?", pencilWithEraser.erase("chuck"));
     assertEquals("How much wood would a woodchuck chuck if a wood      could       wood?", pencilWithEraser.erase("chuck"));
   }
+
+  @Test
+  public void whenEraserErasesTextItShouldDegrade() {
+    int durability = 10;
+    Pencil pencilWithEraser = new Pencil().withEraser(durability);
+    String writtenText = "abcdefgabc";
+    String textToErase = "abc";
+    pencilWithEraser.write(writtenText);
+    pencilWithEraser.erase(textToErase);
+    int degradedEraser = pencilWithEraser.getEraserDurability();
+    assertEquals("Eraser should be degraded by erasing", durability-textToErase.length(), degradedEraser);
+  }
 }
