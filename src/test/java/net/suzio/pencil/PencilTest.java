@@ -37,7 +37,7 @@ public class PencilTest {
   @Test
   public void whenPencilWritesDurabilityDecreases() {
     final int durability = 100;
-    final Pencil pencil = new Pencil(durability);
+    final Pencil pencil = new Pencil().withDurability(durability);
     final String text = "text";
     pencil.write(text);
     assertEquals(
@@ -48,7 +48,7 @@ public class PencilTest {
   @Test
   public void whenPencilWritesSpaceItDoesNotDull() {
     final int durability = 100;
-    final Pencil pencil = new Pencil(durability);
+    final Pencil pencil = new Pencil().withDurability(durability);
     final String text = "text";
     pencil.write(text);
     final String whitespace = " ";
@@ -61,7 +61,7 @@ public class PencilTest {
   @Test
   public void whenPencilWritesInnerWhitespaceItDoesNotDull() {
     final int durability = 100;
-    final Pencil pencil = new Pencil(durability);
+    final Pencil pencil = new Pencil().withDurability(durability);
     final String text = "1 2 3 \n";
     pencil.write(text);
     assertEquals(
@@ -73,7 +73,7 @@ public class PencilTest {
   public void whenPencilWritesLowercaseItDullsByOne() {
     // slightly redundant but we prefer an explicit test
     final int durability = 3;
-    final Pencil pencil = new Pencil(durability);
+    final Pencil pencil = new Pencil().withDurability(durability);
     final String text = "abc";
     pencil.write(text);
     assertEquals(
@@ -84,7 +84,7 @@ public class PencilTest {
   @Test
   public void whenPencilWritesPunctuationItDullsByOne() {
     final int durability = 3;
-    final Pencil pencil = new Pencil(durability);
+    final Pencil pencil = new Pencil().withDurability(durability);
     final String text = "a&b";
     pencil.write(text);
     assertEquals("Starting durability of " + durability
@@ -96,7 +96,7 @@ public class PencilTest {
   public void whenPencilWritesUppercaseItDullsByTwo() {
     // slightly redundant but we prefer an explicit test
     final int durability = 6;
-    final Pencil pencil = new Pencil(durability);
+    final Pencil pencil = new Pencil().withDurability(durability);
     final String text = "ABC";
     pencil.write(text);
     assertEquals("Starting durability of " + durability
@@ -107,7 +107,7 @@ public class PencilTest {
   @Test
   public void whenPencilDullsCompletelyItStopsWriting() {
     final int durability = 5;
-    final Pencil pencil = new Pencil(durability);
+    final Pencil pencil = new Pencil().withDurability(durability);
     final String text = "123456789";
     final String assertion =
         "Text '" + text + "' longer than durability of '" + durability + "' should be truncated";
@@ -118,7 +118,7 @@ public class PencilTest {
   @Test
   public void sharpeningResetsDurability() {
     final int durability = 5;
-    final Pencil pencil = new Pencil(durability);
+    final Pencil pencil = new Pencil().withDurability(durability);
     final String text = "12345";
     pencil.write(text);
     assertEquals("Writing '" + text + "' should dull pencil", 0, pencil.getDurability());
@@ -131,7 +131,7 @@ public class PencilTest {
   public void sharpeningIsLimitedByLength() {
     final int durability = 10;
     final int length = 3;
-    final Pencil pencil = new Pencil(durability, length);
+    final Pencil pencil = new Pencil().withDurability(durability).withLength(3);
     for (int s = 0; s < length; s++) {
       pencil.write("anything");
       pencil.sharpen();

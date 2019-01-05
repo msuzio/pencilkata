@@ -2,24 +2,21 @@ package net.suzio.pencil;
 
 public class Pencil {
 
-  private final int maxDurability;
-  private int length;
-  private int currentDurability;
+  private int maxDurability;
+  private int length = -1;
+  private int currentDurability = -1;
   private StringBuffer paper = new StringBuffer();
 
-  public Pencil() {
-    this(-1,0);
-  }
-
-  public Pencil(int durability) {
-    this(durability, -1);
-  }
-
-  public Pencil(int durability, int length) {
-    this.maxDurability = durability;
-    this.currentDurability = maxDurability;
+  public Pencil withLength(int length) {
     this.length = length;
+    return this;
   }
+
+  public Pencil withDurability(int durability) {
+    this.currentDurability = this.maxDurability = durability;
+    return this;
+  }
+
 
   public String write(String text) {
     if (text != null && text.length() > 0) {
@@ -34,11 +31,13 @@ public class Pencil {
   }
 
   private void dullForCharacter(char letter) {
-    if (letter != '\n' && letter != '\r' && letter != ' ') {
-      if (Character.isLetter(letter) && Character.toUpperCase(letter) == letter) {
-        currentDurability -= 2;
-      } else {
-        currentDurability--;
+    if (currentDurability > 0) {
+      if (letter != '\n' && letter != '\r' && letter != ' ') {
+        if (Character.isLetter(letter) && Character.toUpperCase(letter) == letter) {
+          currentDurability -= 2;
+        } else {
+          currentDurability--;
+        }
       }
     }
   }
