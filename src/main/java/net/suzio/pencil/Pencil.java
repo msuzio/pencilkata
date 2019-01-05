@@ -35,6 +35,13 @@ public class Pencil {
   }
 
   public String erase(String textToErase) {
+    int textLocation = paper.lastIndexOf(textToErase);
+    int eraseLocation = textLocation;
+    while(eraseLocation < textLocation + textToErase.length()) {
+      paper.deleteCharAt(eraseLocation);
+      paper.insert(eraseLocation, ' ');
+      eraseLocation++;
+    }
     return paper.toString();
   }
 

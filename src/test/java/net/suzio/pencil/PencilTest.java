@@ -151,10 +151,9 @@ public class PencilTest {
     Pencil pencilWithEraser = new Pencil().withEraser();
     String writtenText = "abcdefgabc";
     String textToErase = "abc";
-    String expectedErasureResult = "   defg";
+    String expectedErasureResult = "abcdefg   ";
     pencilWithEraser.write(writtenText);
     String erasedText = pencilWithEraser.erase(textToErase);
-    assertFalse("Paper should not contain text after erasure", erasedText.contains(textToErase));
     assertEquals("Erased text should be replaced by blanks", expectedErasureResult, erasedText);
   }
 }
