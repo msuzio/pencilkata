@@ -203,4 +203,17 @@ public class PencilTest {
     assertEquals("Eraser should not degrade when erasing blanks", degradedEraser - 2,
         degradeEraserForBlanks);
   }
+
+  @Test
+  public void whenEraserDegradesCompletelyItStopsErasing() {
+    final int durability = 3;
+    final Pencil pencilWithEraser = new Pencil().withEraser(durability);
+    final String writtenText = "Buffalo Bill";
+    final String textToErase = "Bill";
+    final String expectedErasedText = "Buffalo B";
+    pencilWithEraser.write(writtenText);
+    final String erasedText = pencilWithEraser.erase(textToErase);
+    assertEquals("Eraser should only erase " + durability + " characters before stopping",
+        expectedErasedText, erasedText);
+  }
 }
