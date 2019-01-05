@@ -5,32 +5,33 @@ public class Pencil {
   private int maxDurability;
   private int length = Integer.MAX_VALUE;
   private int currentDurability = Integer.MAX_VALUE;
-  private StringBuffer paper = new StringBuffer();
-  private int eraserDurability = Integer.MAX_VALUE;
+  private final StringBuffer paper = new StringBuffer();
+  private int eraserDurability = -1;
 
-  public Pencil withLength(int length) {
+  public Pencil withLength(final int length) {
     this.length = length;
     return this;
   }
 
-  public Pencil withDurability(int durability) {
-    this.currentDurability = this.maxDurability = durability;
+  public Pencil withDurability(final int durability) {
+    currentDurability = maxDurability = durability;
     return this;
   }
 
   public Pencil withEraser() {
+    eraserDurability = Integer.MAX_VALUE;
     return this;
   }
 
-  public Pencil withEraser(int eraserDurability) {
+  public Pencil withEraser(final int eraserDurability) {
     this.eraserDurability = eraserDurability;
     return this;
   }
 
 
-  public String write(String text) {
+  public String write(final String text) {
     if (textExists(text)) {
-      for (char letter : text.toCharArray()) {
+      for (final char letter : text.toCharArray()) {
         if (pencilCanWrite()) {
           paper.append(letter);
           dullForCharacter(letter);
@@ -40,11 +41,11 @@ public class Pencil {
     return paper.toString();
   }
 
-  public String erase(String textToErase) {
-    int textLocation = paper.lastIndexOf(textToErase);
+  public String erase(final String textToErase) {
+    final int textLocation = paper.lastIndexOf(textToErase);
     if (textLocation > -1) {
       int eraseLocation = textLocation;
-      while (eraseLocation < textLocation + textToErase.length()) {
+      while (pencilCanErase() && eraseLocation < textLocation + textToErase.length()) {
         degradeEraserForCharacter(paper.charAt(eraseLocation));
         paper.deleteCharAt(eraseLocation);
         paper.insert(eraseLocation, ' ');
@@ -54,17 +55,17 @@ public class Pencil {
     return paper.toString();
   }
 
-  private void degradeEraserForCharacter(char letter) {
+  private void degradeEraserForCharacter(final char letter) {
     if (isNotBlankCharacter(letter)) {
       eraserDurability--;
     }
   }
 
-  private boolean textExists(String text) {
+  private boolean textExists(final String text) {
     return text != null && text.length() > 0;
   }
 
-  private void dullForCharacter(char letter) {
+  private void dullForCharacter(final char letter) {
     if (pencilCanWrite() && isNotBlankCharacter(letter)) {
       if (isCapitalLetter(letter)) {
         currentDurability -= 2;
@@ -80,7 +81,7 @@ public class Pencil {
   }
 
   int getEraserDurability() {
-    return this.eraserDurability;
+    return eraserDurability;
   }
 
   public void sharpen() {
@@ -94,11 +95,15 @@ public class Pencil {
     return currentDurability > 0;
   }
 
-  private boolean isCapitalLetter(char letter) {
+  private boolean pencilCanErase() {
+    return eraserDurability > 0;
+  }
+
+  private boolean isCapitalLetter(final char letter) {
     return Character.isLetter(letter) && Character.toUpperCase(letter) == letter;
   }
 
-  private boolean isNotBlankCharacter(char letter) {
+  private boolean isNotBlankCharacter(final char letter) {
     return letter != '\n' && letter != '\r' && letter != ' ';
   }
 
