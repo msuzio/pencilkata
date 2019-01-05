@@ -44,12 +44,12 @@ public class Pencil {
   public String erase(final String textToErase) {
     final int textLocation = paper.lastIndexOf(textToErase);
     if (textLocation > -1) {
-      int eraseLocation = textLocation;
-      while (pencilCanErase() && eraseLocation < textLocation + textToErase.length()) {
+      int eraseLocation = textLocation + textToErase.length() - 1;
+      while (pencilCanErase() && eraseLocation >= textLocation) {
         degradeEraserForCharacter(paper.charAt(eraseLocation));
         paper.deleteCharAt(eraseLocation);
         paper.insert(eraseLocation, ' ');
-        eraseLocation++;
+        eraseLocation--;
       }
     }
     return paper.toString();

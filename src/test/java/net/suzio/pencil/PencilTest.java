@@ -210,7 +210,7 @@ public class PencilTest {
     final Pencil pencilWithEraser = new Pencil().withEraser(durability);
     final String writtenText = "Buffalo Bill";
     final String textToErase = "Bill";
-    final String expectedErasedText = "Buffalo B";
+    final String expectedErasedText = "Buffalo B   ";
     pencilWithEraser.write(writtenText);
     final String erasedText = pencilWithEraser.erase(textToErase);
     assertEquals("Eraser should only erase " + durability + " characters before stopping",
