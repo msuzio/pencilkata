@@ -70,7 +70,6 @@ public class Pencil {
     }
   }
 
-
   private boolean pencilCanWrite() {
     return currentDurability > 0;
   }

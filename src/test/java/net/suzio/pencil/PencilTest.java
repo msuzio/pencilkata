@@ -156,4 +156,12 @@ public class PencilTest {
     String erasedText = pencilWithEraser.erase(textToErase);
     assertEquals("Erased text should be replaced by blanks", expectedErasureResult, erasedText);
   }
+
+  @Test
+  public void eraserErasesSuccessiveTextOccurrences() {
+    Pencil pencilWithEraser = new Pencil().withEraser();
+    pencilWithEraser.write("How much wood would a woodchuck chuck if a woodchuck could chuck wood?");
+    assertEquals("How much wood would a woodchuck chuck if a woodchuck could       wood?", pencilWithEraser.erase("chuck"));
+    assertEquals("How much wood would a woodchuck chuck if a wood      could       wood?", pencilWithEraser.erase("chuck"));
+  }
 }
