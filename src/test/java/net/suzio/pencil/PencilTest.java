@@ -144,4 +144,92 @@ public class PencilTest {
     assertEquals("Pencil should be not re-sharpened after original length is used up",
         beforeSharpen, pencil.getDurability());
   }
+
+  @Test
+  public void eraserErasesTextOccurrence() {
+    final Pencil pencilWithEraser = new Pencil().withEraser();
+    final String writtenText = "abcdefgabc";
+    final String textToErase = "abc";
+    final String expectedErasureResult = "abcdefg   ";
+    pencilWithEraser.write(writtenText);
+    final String erasedText = pencilWithEraser.erase(textToErase);
+    assertEquals("Erased text should be replaced by blanks", expectedErasureResult, erasedText);
+  }
+
+  @Test
+  public void eraserErasesSuccessiveTextOccurrences() {
+    final Pencil pencilWithEraser = new Pencil().withEraser();
+    pencilWithEraser
+        .write("How much wood would a woodchuck chuck if a woodchuck could chuck wood?");
+    assertEquals("How much wood would a woodchuck chuck if a woodchuck could       wood?",
+        pencilWithEraser.erase("chuck"));
+    assertEquals("How much wood would a woodchuck chuck if a wood      could       wood?",
+        pencilWithEraser.erase("chuck"));
+  }
+
+  @Test
+  public void eraserDoesNotEraseIfTextDoesNotMatch() {
+    final Pencil pencilWithEraser = new Pencil().withEraser();
+    final String text = "something";
+    pencilWithEraser.write(text);
+    final String textToErase = "abc";
+    final String erasedText = pencilWithEraser.erase(textToErase);
+    assertEquals("Erased text should be the same when removing non-matching string '" + textToErase,
+        text, erasedText);
+  }
+
+  @Test
+  public void pencilWithoutEraserDoesNotErase() {
+    final Pencil pencilWithoutEraser = new Pencil();
+    final String text = "something";
+    pencilWithoutEraser.write(text);
+    final String erasedText = pencilWithoutEraser.erase("thing");
+    assertEquals("Pencil without eraser should not erase anything", text, erasedText);
+  }
+
+  @Test
+  public void WhenEraserErasesEmptyStringNothingHappens() {
+    final Pencil pencilWithEraser = new Pencil().withEraser();
+    final String writtenText = pencilWithEraser.write("something");
+    final String erasedText = pencilWithEraser.erase(null);
+    assertEquals("Erasing a null value should not change the paper", writtenText, erasedText);
+  }
+
+  @Test
+  public void WhenEraserErasesNullNothingHappens() {
+    final Pencil pencilWithEraser = new Pencil().withEraser();
+    final String writtenText = pencilWithEraser.write("something");
+    final String erasedText = pencilWithEraser.erase(null);
+    assertEquals("Erasing a null value should not change the paper", writtenText, erasedText);
+  }
+
+  @Test
+  public void whenEraserErasesTextItShouldDegrade() {
+    final int durability = 10;
+    final Pencil pencilWithEraser = new Pencil().withEraser(durability);
+    final String writtenText = "abcdef  gabc";
+    final String textToErase = "abc";
+    pencilWithEraser.write(writtenText);
+    pencilWithEraser.erase(textToErase);
+    final int degradedEraser = pencilWithEraser.getEraserDurability();
+    assertEquals("Eraser should be degraded by erasing", durability - textToErase.length(),
+        degradedEraser);
+    pencilWithEraser.erase("f  g");
+    final int degradeEraserForBlanks = pencilWithEraser.getEraserDurability();
+    assertEquals("Eraser should not degrade when erasing blanks", degradedEraser - 2,
+        degradeEraserForBlanks);
+  }
+
+  @Test
+  public void whenEraserDegradesCompletelyItStopsErasing() {
+    final int durability = 3;
+    final Pencil pencilWithEraser = new Pencil().withEraser(durability);
+    final String writtenText = "Buffalo Bill";
+    final String textToErase = "Bill";
+    final String expectedErasedText = "Buffalo B   ";
+    pencilWithEraser.write(writtenText);
+    final String erasedText = pencilWithEraser.erase(textToErase);
+    assertEquals("Eraser should only erase " + durability + " characters before stopping",
+        expectedErasedText, erasedText);
+  }
 }
