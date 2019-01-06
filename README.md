@@ -35,7 +35,4 @@ Pushes on 01/05/19:
   of one erasure followed by one insertion (possible future  exercise, but complicates 
   interface for this exercise).
     * Logically, in editing, we do not choose any random blank area in which to edit, and we erase, 
-    then write, in one logical sequence. Should this be one method call then?
-  * For future improvement, consider all the places we're constantly resizing/shrinking 
-  by one element. introducing intermediate buffers to build up one replacement/insertion could be 
-  more efficient, but out of scope for a kata MVP
+    then write, in one logical sequence. Collapsed to one method
