@@ -2,6 +2,7 @@ package net.suzio.pencil;
 
 public class Pencil {
 
+  private static final char OVERWRITE_SYMBOL = '@';
   private int maxDurability;
   private int length = Integer.MAX_VALUE;
   private int currentDurability = Integer.MAX_VALUE;
@@ -41,7 +42,11 @@ public class Pencil {
       for (final char letter : text.toCharArray()) {
         if (pencilCanWrite()) {
           if (insertAt >= 0) {
-            paper.setCharAt(insertAt, letter);
+            if (paper.charAt(insertAt) != ' ') {
+              paper.setCharAt(insertAt, OVERWRITE_SYMBOL);
+            } else {
+              paper.setCharAt(insertAt, letter);
+            }
             insertAt++;
           } else {
             paper.append(letter);
