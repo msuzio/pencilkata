@@ -2,11 +2,13 @@ package net.suzio.pencil;
 
 public class Pencil {
 
+  private static final char OVERWRITE_SYMBOL = '@';
   private int maxDurability;
   private int length = Integer.MAX_VALUE;
   private int currentDurability = Integer.MAX_VALUE;
   private final StringBuffer paper = new StringBuffer();
   private int eraserDurability = -1;
+  private int lastErasedAreaStart = -1;
 
   public Pencil withLength(final int length) {
     this.length = length;
@@ -30,10 +32,25 @@ public class Pencil {
 
 
   public String write(final String text) {
+    //
+    // if we're writing after we've erased text, we want to write into that spot (possibly overwriting existing text)
+    //
     if (textIsNotEmpty(text)) {
+
+      int insertAt = lastErasedAreaStart;
+
       for (final char letter : text.toCharArray()) {
         if (pencilCanWrite()) {
-          paper.append(letter);
+          if (insertAt >= 0) {
+            if (paper.charAt(insertAt) != ' ') {
+              paper.setCharAt(insertAt, OVERWRITE_SYMBOL);
+            } else {
+              paper.setCharAt(insertAt, letter);
+            }
+            insertAt++;
+          } else {
+            paper.append(letter);
+          }
           dullForCharacter(letter);
         }
       }
@@ -44,16 +61,22 @@ public class Pencil {
   public String erase(final String textToErase) {
     if (pencilCanErase() && textIsNotEmpty(textToErase)) {
       final int textLocation = paper.lastIndexOf(textToErase);
+      int eraseLocation = textLocation + textToErase.length() - 1;
       if (textLocation > -1) {
-        int eraseLocation = textLocation + textToErase.length() - 1;
         while (pencilCanErase() && eraseLocation >= textLocation) {
           degradeEraserForCharacter(paper.charAt(eraseLocation));
-          paper.replace(eraseLocation, eraseLocation + 1, " ");
+          paper.setCharAt(eraseLocation, ' ');
           eraseLocation--;
         }
       }
+      lastErasedAreaStart = eraseLocation + 1;
     }
     return paper.toString();
+  }
+
+  public String edit(final String textToErase, final String textToAdd) {
+    erase(textToErase);
+    return write(textToAdd);
   }
 
   private void degradeEraserForCharacter(final char letter) {
