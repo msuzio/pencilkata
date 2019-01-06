@@ -48,8 +48,7 @@ public class Pencil {
         int eraseLocation = textLocation + textToErase.length() - 1;
         while (pencilCanErase() && eraseLocation >= textLocation) {
           degradeEraserForCharacter(paper.charAt(eraseLocation));
-          paper.deleteCharAt(eraseLocation);
-          paper.insert(eraseLocation, ' ');
+          paper.replace(eraseLocation, eraseLocation + 1, " ");
           eraseLocation--;
         }
       }

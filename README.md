@@ -23,3 +23,9 @@ Pushes on 01/05/19:
   * Git repository
     * Pushed feature branch to preserve history of building functionality
     * Did a PR that squash merged feature branch to master
+    
+    
+### Push Three:
+  * With a fresh mind, reviewed existing work and realized StringBuilder was being 
+  used inefficiently. Reverted to the replace() method (can't recall why we had not stuck 
+  with it)
