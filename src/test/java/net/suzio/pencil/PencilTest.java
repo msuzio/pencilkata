@@ -237,8 +237,7 @@ public class PencilTest {
   public void whenPencilAddsEDitTextInBlanksSpaceItIsAddedToPaper() {
     final Pencil pencil = new Pencil().withEraser();
     pencil.write("An apple a day keeps the doctor away");
-    pencil.erase("apple");
-    final String resultText = pencil.write("onion");
+    final String resultText = pencil.edit("apple", "onion");
     assertEquals("Text should be written over blank spaces on paper",
         "An onion a day keeps the doctor away", resultText);
   }
@@ -247,8 +246,7 @@ public class PencilTest {
   public void whenPencilAddsEditTextThatDoesNotFitItOverwrites() {
     final Pencil pencil = new Pencil().withEraser();
     pencil.write("An apple a day keeps the doctor away");
-    pencil.erase("apple");
-    final String resultText = pencil.write("artichoke");
+    final String resultText = pencil.edit("apple", "artichoke");
     assertEquals("Text should be written over blank spaces on paper",
         "An artich@k@ay keeps the doctor away", resultText);
   }

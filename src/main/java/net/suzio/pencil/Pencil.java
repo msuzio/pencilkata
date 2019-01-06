@@ -74,6 +74,11 @@ public class Pencil {
     return paper.toString();
   }
 
+  public String edit(final String textToErase, final String textToAdd) {
+    erase(textToErase);
+    return write(textToAdd);
+  }
+
   private void degradeEraserForCharacter(final char letter) {
     if (isNotBlankCharacter(letter)) {
       eraserDurability--;
