@@ -232,4 +232,13 @@ public class PencilTest {
     assertEquals("Eraser should only erase " + durability + " characters before stopping",
         expectedErasedText, erasedText);
   }
+
+  @Test
+  public void whenPenciAddsTextInBlanksSpaceItIsAddedToPaper() {
+    final Pencil pencil = new Pencil();
+    pencil.write("An       a day keeps the doctor away");
+    final String resultText = pencil.write("onion");
+    assertEquals("Text should be written over blank spaces on paper",
+        "An onion a day keeps the doctor away", resultText);
+  }
 }
