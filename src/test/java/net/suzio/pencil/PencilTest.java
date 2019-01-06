@@ -235,8 +235,9 @@ public class PencilTest {
 
   @Test
   public void whenPenciAddsTextInBlanksSpaceItIsAddedToPaper() {
-    final Pencil pencil = new Pencil();
-    pencil.write("An       a day keeps the doctor away");
+    final Pencil pencil = new Pencil().withEraser();
+    pencil.write("An apple a day keeps the doctor away");
+    pencil.erase("apple");
     final String resultText = pencil.write("onion");
     assertEquals("Text should be written over blank spaces on paper",
         "An onion a day keeps the doctor away", resultText);
