@@ -234,12 +234,22 @@ public class PencilTest {
   }
 
   @Test
-  public void whenPenciAddsTextInBlanksSpaceItIsAddedToPaper() {
+  public void whenPencilAddsEDitTextInBlanksSpaceItIsAddedToPaper() {
     final Pencil pencil = new Pencil().withEraser();
     pencil.write("An apple a day keeps the doctor away");
     pencil.erase("apple");
     final String resultText = pencil.write("onion");
     assertEquals("Text should be written over blank spaces on paper",
         "An onion a day keeps the doctor away", resultText);
+  }
+
+  @Test
+  public void whenPencilAddsEditTextThatDoesNotFitItOverwrites() {
+    final Pencil pencil = new Pencil().withEraser();
+    pencil.write("An apple a day keeps the doctor away");
+    pencil.erase("apple");
+    final String resultText = pencil.write("artichoke");
+    assertEquals("Text should be written over blank spaces on paper",
+        "An artich@k@ay keeps the doctor away", resultText);
   }
 }
