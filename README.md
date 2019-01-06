@@ -29,3 +29,13 @@ Pushes on 01/05/19:
   * With a fresh mind, reviewed existing work and realized StringBuilder was being 
   used inefficiently. Reverted to the replace() method (can't recall why we had not stuck 
   with it)
+
+### Push Four:
+  * Adding editing function, decided that the reasonable use case is to consider only the case 
+  of one erasure followed by one insertion (possible future  exercise, but complicates 
+  interface for this exercise).
+    * Logically, in editing, we do not choose any random blank area in which to edit, and we erase, 
+    then write, in one logical sequence. Should this be one method call then?
+  * For future improvement, consider all the places we're constantly resizing/shrinking 
+  by one element. introducing intermediate buffers to build up one replacement/insertion could be 
+  more efficient, but out of scope for a kata MVP
