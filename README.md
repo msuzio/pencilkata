@@ -1,6 +1,8 @@
 # Pencil kata
 
 Implementation of [Pluralsight Pencil Kata](https://github.com/PillarTechnology/kata-pencil-durability)
+Modeling a Pencil with a set of desired attributes; an unspecified Writer and a concept of Paper 
+are implicitly assumed but not modeled.
 
 ## testing the kata
 * clone this repository
@@ -55,11 +57,14 @@ Pushes on 01/06/2019:
       be eager to hear more on this insight.
   * Solution is not overly OO -- there is no Paper class, for instance. However, use cases did 
   not provide a justification, as the only collaborators are the (unseen) Writer and the Pencil.
-  The text is the side-effect of each use of the Pencil, and that's what we do. YAGNI.
+  The text is the side-effect of each use of the Pencil, and that's what we do. Very YAGNI, and 
+  this exercise somewhat strains the OO paradigm in any case. Might be fun to rewrite 
+  in Clojure since I want to learn it.
   * Solution could be more optimized -- we operated character by character, which makes a 
-  System.arraycopy call for each character. 
+  System.arraycopy call for each character.
     * First step in this would be a functional test once we can define something like 
     scribing the First Folio, which is out of scope in a kata.
    
-  * _This was fun_. I'll do all the other exercises in the future.
+  * _This was fun_. I'll do all the other exercises in the future, and scan Uncle Bob 
+  for more ideas.
     
